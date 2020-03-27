@@ -14,8 +14,8 @@ Play with the computer that uses a random number generator to take a turn. Compu
 Play with another person on the same computer. Alternate turns. Label in corner displays which player's turn.
 
 ### Colours
-Yellow Pegs - Playable spots
-Blue Pegs - Players
+Yellow Pegs - Playable spots\n
+Blue Pegs - Players\n
 Big Pegs - Spots that have been won by a player
 
 #### Menu Screen 
