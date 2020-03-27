@@ -8,6 +8,7 @@ import javax.swing.event.*;
  *   Altered by Nicole and Lilly. Changed colours, added grid lines. Changed pegs. 
  */
 
+@SuppressWarnings("serial")
 public class Board extends JPanel
 {
 	private static final int X_DIM = 60;
@@ -35,24 +36,33 @@ public class Board extends JPanel
 	private static final Color DEFAULT_COLOUR = Color.BLACK;
 
 	private Color[][] grid;
+
+	private Color[][] bigPeg;	//do we need this?
+
 	private Coordinate lastClick;  // How the mouse handling thread communicates 
 	// to the board where the last click occurred
 	private String message = "";
 	private int numLines = 0;
 	private int[][] line = new int[4][100];  // maximum number of lines is 100
+	@SuppressWarnings("unused")
 	private int columns, rows;
 
+	@SuppressWarnings("unused")
 	private boolean first = true;
 	private int originalWidth;
 	private int originalHeight;
 	private double scale;
+	
+	//	private BigTacToe btt = new BigTacToe();
+	
+	public static JFrame f;
 
 	/** A constructor to build a 2D board.
 	 */
 	public Board (int rows, int cols)
 	{
 		super( true );
-		JFrame f = new JFrame( "Big Tac Toe" );
+		 f = new JFrame( "Big Tac Toe" );
 
 		this.columns = cols;
 		this.rows = rows;
@@ -64,6 +74,7 @@ public class Board extends JPanel
 		f.setResizable(true);
 
 		this.grid = new Color[cols][rows];
+		this.bigPeg = new Color[cols/3][rows/3];
 
 		this.addMouseListener(
 				new MouseInputAdapter() 
@@ -123,22 +134,6 @@ public class Board extends JPanel
 		g.fillRect(x,y, this.getSize().width, (int)Math.round(GAP+FONT_SIZE*scale) );
 		g.setColor( Color.black );
 		g.drawString(message, x, y + (int)Math.round(FONT_SIZE*scale));
-
-		//CREATES LARGE TIC TAC TOE BOARD
-		((Graphics2D) g).setStroke(new BasicStroke(4));
-		g.drawLine((int) ((X_OFFSET+X_DIM*3)*scale), (int) (Y_OFFSET*scale)+2, (int)((X_OFFSET+X_DIM*3)*scale), (int)((Y_OFFSET+Y_DIM*9)*scale)-1);
-		g.drawLine((int) ((X_OFFSET+X_DIM*3*2)*scale), (int) (Y_OFFSET*scale)+2, (int)((X_OFFSET+X_DIM*3*2)*scale), (int)((Y_OFFSET+Y_DIM*9)*scale)-1);
-		g.drawLine((int) ((X_OFFSET)*scale)+1, (int) ((Y_DIM*3+Y_OFFSET)*scale), (int)((X_OFFSET+X_DIM*9)*scale)-1, (int)((Y_OFFSET+Y_DIM*3)*scale));
-		g.drawLine((int) ((X_OFFSET)*scale)+1, (int) ((Y_DIM*3*2+Y_OFFSET)*scale), (int)((X_OFFSET+X_DIM*9)*scale)-1, (int)((Y_OFFSET+Y_DIM*3*2)*scale));
-
-		//CREATES SMALL TIC TAC TOE BOARD
-		((Graphics2D) g).setStroke(new BasicStroke(2));
-		for (int i = 0; i < 3; i++) {
-			g.drawLine((int) ((X_OFFSET+X_DIM+X_DIM*3*i)*scale), (int) (Y_OFFSET*scale)+2, (int)((X_OFFSET+X_DIM+X_DIM*3*i)*scale), (int)((Y_OFFSET+Y_DIM*9)*scale)-1);
-			g.drawLine((int) ((X_OFFSET+X_DIM*2+X_DIM*3*i)*scale), (int) (Y_OFFSET*scale)+2, (int)((X_OFFSET+X_DIM*2+X_DIM*i*3)*scale), (int)((Y_OFFSET+Y_DIM*9)*scale)-1);
-			g.drawLine((int) ((X_OFFSET)*scale)+1, (int) ((Y_DIM+Y_OFFSET+Y_DIM*3*i)*scale), (int)((X_OFFSET+X_DIM*9)*scale)-1, (int)((Y_OFFSET+Y_DIM+Y_DIM*3*i)*scale));
-			g.drawLine((int) ((X_OFFSET)*scale)+1, (int) ((Y_DIM*2+Y_OFFSET+Y_DIM*3*i)*scale), (int)((X_OFFSET+X_DIM*9)*scale)-1, (int)((Y_OFFSET+Y_DIM*2+Y_DIM*3*i)*scale));
-		}
 	}
 
 	private void paintGrid(Graphics g)
@@ -167,6 +162,7 @@ public class Board extends JPanel
 				}
 			}
 		}
+
 		((Graphics2D) g).setStroke( new BasicStroke(0.5f) );
 		g.setColor(Color.BLACK);
 		int curX = (int)Math.round(X_OFFSET*scale);
@@ -174,6 +170,48 @@ public class Board extends JPanel
 		int nextX = (int)Math.round((X_OFFSET+X_DIM*grid.length)*scale);
 		int nextY = (int)Math.round((Y_OFFSET+Y_DIM*grid[0].length)*scale);
 		g.drawRect(curX, curY, nextX-curX, nextY-curY);
+
+		//CREATES LARGE TIC TAC TOE BOARD
+		((Graphics2D) g).setStroke(new BasicStroke(4));
+		g.drawLine((int) ((X_OFFSET+X_DIM*3)*scale), (int) (Y_OFFSET*scale)+2, (int)((X_OFFSET+X_DIM*3)*scale), (int)((Y_OFFSET+Y_DIM*9)*scale)-1);
+		g.drawLine((int) ((X_OFFSET+X_DIM*3*2)*scale), (int) (Y_OFFSET*scale)+2, (int)((X_OFFSET+X_DIM*3*2)*scale), (int)((Y_OFFSET+Y_DIM*9)*scale)-1);
+		g.drawLine((int) ((X_OFFSET)*scale)+1, (int) ((Y_DIM*3+Y_OFFSET)*scale), (int)((X_OFFSET+X_DIM*9)*scale)-1, (int)((Y_OFFSET+Y_DIM*3)*scale));
+		g.drawLine((int) ((X_OFFSET)*scale)+1, (int) ((Y_DIM*3*2+Y_OFFSET)*scale), (int)((X_OFFSET+X_DIM*9)*scale)-1, (int)((Y_OFFSET+Y_DIM*3*2)*scale));
+
+		//CREATES SMALL TIC TAC TOE BOARD
+		((Graphics2D) g).setStroke(new BasicStroke(2));
+		for (int i = 0; i < 3; i++) {
+			g.drawLine((int) ((X_OFFSET+X_DIM+X_DIM*3*i)*scale), (int) (Y_OFFSET*scale)+2, (int)((X_OFFSET+X_DIM+X_DIM*3*i)*scale), (int)((Y_OFFSET+Y_DIM*9)*scale)-1);
+			g.drawLine((int) ((X_OFFSET+X_DIM*2+X_DIM*3*i)*scale), (int) (Y_OFFSET*scale)+2, (int)((X_OFFSET+X_DIM*2+X_DIM*i*3)*scale), (int)((Y_OFFSET+Y_DIM*9)*scale)-1);
+			g.drawLine((int) ((X_OFFSET)*scale)+1, (int) ((Y_DIM+Y_OFFSET+Y_DIM*3*i)*scale), (int)((X_OFFSET+X_DIM*9)*scale)-1, (int)((Y_OFFSET+Y_DIM+Y_DIM*3*i)*scale));
+			g.drawLine((int) ((X_OFFSET)*scale)+1, (int) ((Y_DIM*2+Y_OFFSET+Y_DIM*3*i)*scale), (int)((X_OFFSET+X_DIM*9)*scale)-1, (int)((Y_OFFSET+Y_DIM*2+Y_DIM*3*i)*scale));
+		}
+
+		//below is Big Peg added by Nicole and Lilly
+		Color colour = Color.BLACK;
+		for (int i = 0; i < BigTacToe.bigBoard.length; i++)
+		{
+			for (int j = 0; j < BigTacToe.bigBoard[i].length; j++)
+			{   
+				if (BigTacToe.bigBoard[i][j] != 0) {
+					bigPeg[i][j] = colour;
+				}
+				if (bigPeg[i][j] != null) {
+					int cuX = (int)Math.round((X_OFFSET+X_DIM*(j*3 + .25))*scale);	//x coordinate upper left corner
+					int cuY = (int)Math.round((Y_OFFSET+Y_DIM*(i*3 + .25))*scale);	//y coordinate of upper left corner
+					int nexX = (int)Math.round((X_OFFSET+X_DIM*2)*scale);	//width
+					int nexY = (int)Math.round((Y_OFFSET+Y_DIM*2)*scale);	//height
+					if (BigTacToe.bigBoard[i][j] == 1) {
+						colour = convertColour(Player.COLOR_1);;
+					}
+					else if (BigTacToe.bigBoard[i][j] == 2) {
+						colour = convertColour(Player.COLOR_2);;
+					}
+					g.setColor(colour);
+					g.fillOval(cuX, cuY, nexX, nexY);
+				}
+			}
+		}
 	}
 
 	private void drawLine(Graphics g)
@@ -203,15 +241,15 @@ public class Board extends JPanel
 		return DEFAULT_COLOUR;
 	}
 
-
 	/** The method that draws everything
 	 */
 	public void paintComponent( Graphics g ) 
 	{
 		this.setScale();
-		this.paintGrid(g);
 		this.drawLine(g);
+		this.paintGrid(g);
 		this.paintText(g);
+		//this.paintBigPeg(g);
 	}
 
 	public void setScale()
@@ -228,7 +266,6 @@ public class Board extends JPanel
 		message = theMessage;
 		this.repaint();
 	}
-
 
 	/** This method will save the value of the colour of the peg in a specific 
 	 * spot.  theColour is restricted to 

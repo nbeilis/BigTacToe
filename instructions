@@ -1,0 +1,16 @@
+Hey there partner!
+To play this game, you can either play with another person (2-Player Game) or against a computer (1-Player Game)!
+Big-Tac-Toe takes place on a big three-by-three grid, where each large section further has a smaller three-by-three grid. 
+
+The goal of Big-Tac-Toe is to win three large sections in a row (diagonally, horizontally, vertically). 
+
+Players take turns clicking on an empty and viable space to designate that they have chosen the spot.
+
+Rules:
+1. For the first move, the first player can choose a spot in any section
+2. The following player MUST play within the large section that corresponds to the small spot the previous player went in. This applies for all players immediately after the first move.
+3. If a player is sent to a filled section or a section with a winner, since no one can play in that section, the player sent there can go anywhere.
+4. To win a large section, a player must win a small game of tic-tac-toe by getting three of their pieces in a row (diagonally, horizontally, vertically)
+5. The player who wins three in a row of the large sections wins the overall game.
+...and the last rule is to have fun! :D
+
