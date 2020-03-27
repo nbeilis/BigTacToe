@@ -16,6 +16,7 @@ Play with another person on the same computer. Alternate turns. Label in corner 
 ### Colours
 Yellow Pegs - Playable spots
 Blue Pegs - Players
+Big Pegs - Spots that have been won by a player
 
 #### Menu Screen 
 ![menu screen image](images/startMenu.png)
