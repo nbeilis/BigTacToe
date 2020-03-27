@@ -1,5 +1,8 @@
 # BigTacToe
 
+### What is BigTacToe
+A Java Application that is tic tac toe, but bigger! The tic tac toe games are nested inside of a larger tic tac toe game and affect one another. 
+
 ### Instructions 
 1. For the first move, the first player can choose a spot in any section.
 2. The following player MUST play within the large section that corresponds to the small spot the previous player went in. This applies for all players immediately after the first move.
